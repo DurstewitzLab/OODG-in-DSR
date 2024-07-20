@@ -40,5 +40,16 @@ function prediction_error(
     return mse
 end
 
-prediction_error(model, O, X::AbstractArray{T, 3}, n) where {T} =
-    mean(prediction_error.(Ref(model), Ref(O), eachslice(X, dims = 3), n))
+prediction_error(model, O, X::AbstractArray{T,3}, n) where {T} =
+    mean(prediction_error.(Ref(model), Ref(O), eachslice(X, dims=3), n))
+
+prediction_error(model, O, X::AbstractArray{T,3}, n, S::AbstractArray{T,3}) where {T} =
+    mean(
+        prediction_error.(
+            Ref(model),
+            Ref(O),
+            eachslice(X, dims=3),
+            n,
+            eachslice(S, dims=3),
+        ),
+    )

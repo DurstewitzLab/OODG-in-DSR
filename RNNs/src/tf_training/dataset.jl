@@ -19,16 +19,9 @@ end
 Dataset(path::String; device = cpu, dtype = Float32) =
     Dataset(path, ""; device = device, dtype = dtype)
 
-"""
-    ExternalInputsDataset(args; kwargs)
-
-Standard dataset storing a continuous time series of size
-T × N, where N is the data dimension, and a corresponding time
-series of exogeneous inputs of shape T × K.
-"""
-struct ExternalInputsDataset{M <: AbstractMatrix} <: AbstractDataset
-    X::M
-    S::M
+struct ExternalInputsDataset{T, N, A <: AbstractArray{T, N}} <: AbstractDataset
+    X::A
+    S::A
     name::String
 end
 
@@ -42,8 +35,12 @@ function ExternalInputsDataset(
     X = npzread(data_path) .|> dtype |> device
     S = npzread(inputs_path) .|> dtype |> device
 
-    @assert ndims(X) == ndims(S) == 2 "Data and inputs must be 2D but are $(ndims(X))D and $(ndims(S))D."
-    @assert size(X, 1) == size(S, 1) "Data and exogeneous inputs have to be of equal length."
+    if ndims(X) == 2
+        X = reshape(X, size(X)..., 1)
+    end
+    if ndims(S) == 2
+        S = reshape(S, size(S)..., 1)
+    end
     return ExternalInputsDataset(X, S, name)
 end
 
@@ -65,10 +62,10 @@ function sample_sequence(D::Dataset{T_, 3, A}, T̃::Int, j::Int) where {T_, A}
     return @views D.X[i:i+T̃, :, j]
 end
 
-function sample_sequence(D::ExternalInputsDataset, T̃::Int)
+function sample_sequence(D::ExternalInputsDataset{T_, 3, A}, T̃::Int, j::Int) where {T_, A}
     T = size(D.X, 1)
     i = rand(1:T-T̃-1)
-    return D.X[i:i+T̃, :], D.S[i:i+T̃, :]
+    return D.X[i:i+T̃, :, j], D.S[i:i+T̃, :, j]
 end
 
 """
@@ -87,12 +84,13 @@ function sample_batch(D::Dataset{T_, 3, A}, T̃::Int, S::Int) where {T_, A}
     return Xs
 end
 
-function sample_batch(D::ExternalInputsDataset, T̃::Int, S::Int)
+function sample_batch(D::ExternalInputsDataset{T_, 3, A}, T̃::Int, S::Int) where {T_, A}
     N, K = size(D.X, 2), size(D.S, 2)
+    n = size(D.X, 3)
     Xs = similar(D.X, N, S, T̃ + 1)
     Ss = similar(D.X, K, S, T̃ + 1)
     for i = 1:S
-        X̃, S̃ = sample_sequence(D, T̃)
+        X̃, S̃ = sample_sequence(D, T̃, rand(1:n))
         Xs[:, i, :] .= X̃'
         Ss[:, i, :] .= S̃'
     end

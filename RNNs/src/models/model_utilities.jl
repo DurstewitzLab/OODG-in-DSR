@@ -51,7 +51,7 @@ function generate(ℳ, z₁::AbstractMatrix, T::Int)
     return Z
 end
 
-function generate(ℳ, z₁::AbstractMatrix, T::Int, S::AbstractMatrix)
+function generate(ℳ, z₁::AbstractMatrix{T_}, T::Int, S::AbstractArray{T_,3}) where {T_}
     # trajectory placeholder
     Z = similar(z₁, T, size(z₁)...)
 
@@ -82,14 +82,34 @@ function generate(ℳ, 𝒪::ObservationModel, x₁::AbstractMatrix, T::Int)
     return permutedims(X, (3, 1, 2))
 end
 
-function generate(ℳ, 𝒪::ObservationModel, x₁::AbstractVecOrMat, T::Int, S::AbstractMatrix)
+function generate(ℳ, 𝒪::ObservationModel, x₁::AbstractVector, T::Int)
+    z₁ = init_state(𝒪, x₁)
+    Z = generate(ℳ, z₁, T)
+    X = 𝒪(Z')
+    return permutedims(X, (2, 1))
+end
+
+function generate(ℳ, 𝒪::ObservationModel, x₁::AbstractVector, T::Int, S::AbstractMatrix)
     z₁ = init_state(𝒪, x₁)
     Z = generate(ℳ, z₁, T, S)
     return permutedims(𝒪(Z'), (2, 1))
 end
 
+function generate(
+    ℳ,
+    𝒪::ObservationModel,
+    x₁::AbstractMatrix{T_},
+    T::Int,
+    S::AbstractArray{T_,3},
+) where {T_}
+    z₁ = init_state(𝒪, x₁)
+    Z = generate(ℳ, z₁, T, S)
+    X = 𝒪(permutedims(Z, (2, 3, 1)))
+    return permutedims(X, (3, 1, 2))
+end
+
 keep_connectivity_offdiagonal!(m, g) = nothing
-keep_connectivity_offdiagonal!(m::Union{AbstractVanillaPLRNN, AbstractDendriticPLRNN}, g) =
+keep_connectivity_offdiagonal!(m::Union{AbstractVanillaPLRNN,AbstractDendriticPLRNN}, g) =
     offdiagonal!(g[m.W])
 
 """
@@ -99,7 +119,7 @@ Compute the Lyapunov spectrum of the PLRNN model `ℳ` given initial condition `
 The system is first evolved for `Tₜᵣ` steps to reach the attractor,
 and then the spectrum is computed across `T` steps. Reorthogonalize every `ons` steps.
 """
-function lyapunov_spectrum(ℳ, z₁, T; T_tr = 1000, ons = 1)
+function lyapunov_spectrum(ℳ, z₁, T; T_tr=1000, ons=1)
     # evolve for transient time Tₜᵣ
     z = copy(z₁)
     for t = 1:T_tr

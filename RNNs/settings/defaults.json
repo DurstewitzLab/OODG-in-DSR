@@ -1,16 +1,16 @@
 {   
-    "experiment": "L96-2",
+    "experiment": "duffing",
     "name": "test",
-    "path_to_data": "Lorenz96/lorenz96_on0.05_train.npy",
+    "path_to_data": "data/DUFFING_FIG_3_TRAJS.npy",
     "path_to_inputs": "",
     "run": 1,
     "device": "cpu",
 
     "model": "clippedShallowPLRNN",
     "observation_model": "Identity",
-    "latent_dim": 20,
+    "latent_dim": 2,
     "num_bases": 50,
-    "hidden_dim": 150,
+    "hidden_dim": 100,
     "hidden_layers": [100, 100, 100],
 
     "MAR_ratio": 0.0,
