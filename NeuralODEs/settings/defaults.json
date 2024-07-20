@@ -1,0 +1,38 @@
+{   
+    "experiment": "Duffing_generalizing",
+    "name": "default",
+    "path_to_data": "datasets/Duffing3.npy",
+    "run": 1,
+    "device": "cpu",
+    "BLAS_threads": 1,
+
+    "model": "Chain",
+    "pretrained_path": "",
+    "hidden_dim": 100,
+    "hidden_dims": [20],
+    "nonlinearity": "tanh",
+    "init_weight": "glorot_uniform",
+    "solver": "Tsit5",
+    "errtol": 1e-4,
+
+    "lat_model_regularization": 0.0,
+
+    "optimizer": "RADAM",
+    "gradient_clipping_norm": 0.0,
+    "start_lr": 1e-2,
+    "end_lr": 1e-5, 
+    "batch_size": 32,
+    "sequence_length": 40,
+    "sequence_time_delta": 0.01,
+
+    "epochs": 30000,
+    "saving_interval": 5,
+    "gaussian_noise_level": 0.00,
+
+    "plot_and_store_predictions": true,
+
+    "D_stsp_bins": 30,
+    "D_stsp_scaling": 1.0,
+    "PSE_smoothing": 20.0,
+    "PE_n": 20
+}

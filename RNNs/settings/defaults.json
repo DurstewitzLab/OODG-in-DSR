@@ -1,0 +1,45 @@
+{   
+    "experiment": "L96-2",
+    "name": "test",
+    "path_to_data": "Lorenz96/lorenz96_on0.05_train.npy",
+    "path_to_inputs": "",
+    "run": 1,
+    "device": "cpu",
+
+    "model": "clippedShallowPLRNN",
+    "observation_model": "Identity",
+    "latent_dim": 20,
+    "num_bases": 50,
+    "hidden_dim": 150,
+    "hidden_layers": [100, 100, 100],
+
+    "MAR_ratio": 0.0,
+    "MAR_lambda": 0.0,
+    "lat_model_regularization": 0.0,
+    "obs_model_regularization": 0.0,
+
+    "optimizer": "RADAM",
+    "gradient_clipping_norm": 0.0,
+    "start_lr": 1e-3,
+    "end_lr": 1e-6, 
+    "batch_size": 32,
+    "sequence_length": 50,
+    "teacher_forcing_interval": 20,
+    "use_gtf": true,
+    "gtf_alpha": 0.1,
+    "gtf_alpha_method": "constant",
+    "gtf_alpha_decay": 0.999,
+    "alpha_update_interval": 5,
+    "partial_forcing": false,
+
+    "epochs": 5000,
+    "batches_per_epoch": 50,
+    "scalar_saving_interval": 25,
+    "image_saving_interval": 25,
+    "gaussian_noise_level": 0.00,
+
+    "D_stsp_bins": 30,
+    "D_stsp_scaling": 1.0,
+    "PSE_smoothing": 1.0,
+    "PE_n": 20
+}
