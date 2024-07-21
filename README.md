@@ -87,6 +87,19 @@ The measures introduced in the paper can be found in `ReconstructionMeasures/was
 $ julia --project=. ic_grid_duffing.jl
 ```
 ## 5 Citation
+If you find the repository and/or paper helpful for your own research, please cite our work (will be replaced by PMLR cit. once published).
+```
+@misc{göring2024outofdomaingeneralizationdynamicalsystems,
+      title={Out-of-Domain Generalization in Dynamical Systems Reconstruction}, 
+      author={Niclas Göring and Florian Hess and Manuel Brenner and Zahra Monfared and Daniel Durstewitz},
+      year={2024},
+      eprint={2402.18377},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2402.18377}, 
+}
+```
 ## 6 Funding
+This work was funded by the German Research Foundation (DFG) within Germany’s Excellence Strategy EXC 2181/1 – 390900948 (STRUCTURES) and by DFG grant Du354/15-1 to DD.
 
 
