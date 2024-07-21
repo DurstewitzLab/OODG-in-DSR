@@ -22,7 +22,7 @@ data = collect.(eachslice(permutedims(raw_data, (2, 3, 1)), dims=3))
 train_data = data[1:end-1] |> gpu
 target_data = data[2:end] |> gpu
 const T_WARMUP = 1
-const N_MODELS = 1
+const N_MODELS = 50
 
 # TEST DATA
 data_test = npzread(joinpath(PWD, "data", "DUFFING_TEST_GRID.npy"))
