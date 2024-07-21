@@ -1,5 +1,4 @@
-# Out-of-Domain Generalization in Dynamical Systems Reconstruction [ICML 2024 Poster]
-Official Repository of the paper "Out-of-Domain Generalization in Dynamical Systems Reconstruction".
+# Out-of-Domain Generalization in Dynamical Systems Reconstruction [[ICML 2024 Poster](https://icml.cc/virtual/2024/poster/32708)]
 
 ## 1 Setup
 ### 1.1 Environment setup
