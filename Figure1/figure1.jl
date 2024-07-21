@@ -1,11 +1,9 @@
 using DifferentialEquations, MAT ,ColorSchemes
 using CairoMakie
-using NeuralODETraining
 using    DiffEqFlux,
     Lux,
     Random,
     Plots,
-    DifferentialEquations,
     NPZ,
     Statistics,
     LinearAlgebra
