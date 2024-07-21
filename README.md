@@ -1,4 +1,5 @@
 # Out-of-Domain Generalization in Dynamical Systems Reconstruction [[ICML 2024 Poster](https://icml.cc/virtual/2024/poster/32708)]
+![](OODG_poster_2107.png "ICML Poster")
 
 ## 1 Setup
 ### 1.1 Environment setup
