@@ -1,6 +1,8 @@
 # Out-of-Domain Generalization in Dynamical Systems Reconstruction [[ICML 2024 Poster](https://icml.cc/virtual/2024/poster/32708)]
 ![](OODG_poster_2107.png "ICML Poster")
 
+:warning: *Repository still WIP* :warning:
+
 ## 1 Setup
 ### 1.1 Environment setup
 To rerun figure code, instantiate the Julia environment in the main repository directory.
